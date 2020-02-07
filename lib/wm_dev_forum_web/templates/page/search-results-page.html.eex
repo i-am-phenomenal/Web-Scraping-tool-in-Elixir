@@ -1,0 +1,13 @@
+<div>
+
+  <h1> Showing results for "<%= @search_query %>"</h1>
+
+  <%= for result <- @search_results do %>
+
+    <li>
+      <p> <%= result.movie_name %>   </p>
+      <input type="button" value="View Details" onClick="window.location.href='<%= "/get_clicked_movie_details/"<> result.movie_name <>"/" <> result.movie_id %>'"
+    </li>
+
+  <%= end %>
+</div>

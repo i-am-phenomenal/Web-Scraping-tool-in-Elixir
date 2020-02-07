@@ -1,0 +1,136 @@
+<div class="container">
+  <%= form_for @conn, page_path(@conn, :add_answer), [id: :signupform], fn(f)-> %>
+  <!-- <p class ="baseline	bottom"><a href=<%= "/back_from_answers_page/" <> @question.uuid %>> Back</a></p> -->
+  <div>
+  <%= label f, :question, "Question: " %>
+  <span> <%= @question.title %> </span>
+  <br>
+  <%= label f, :description, "Description: " %>
+  <span> <%= @question.description %> </span>
+  <p><b> By: </b> <%= @question.first_name <> " " <> @question.last_name %></p>
+</div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="page-header">Answers</h2>
+
+
+          <%= if @answers != [] do %>
+          <section class="comment-list">
+          <%= for answer <- Enum.sort(@answers, &(&1.inserted_at <= &2.inserted_at)) do %>
+          <!-- First Comment -->
+
+          <article class="row">
+            <div class="col-md-3 col-sm-3 hidden-xs">
+              <figure class="thumbnail">
+
+                 <%= answer.user.first_name %> <%= answer.user.last_name %>
+
+              </figure>
+            </div>
+            <div class="col-md-9 col-sm-9">
+              <div class="panel panel-default
+
+
+
+
+              arrow left">
+                <div class="panel-body">
+                  <!-- <header class="text-left">
+                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+                  </header> -->
+                  <div class="comment-post">
+                    <p>
+                      <%= answer.answer_text %>
+                    </p>
+                  </div>
+                  <p class="text-right">
+                      <%=  if answer.is_correct do %>
+                        <img src="https://img.icons8.com/color/20/000000/double-tick.png" , title="Marked as Correct">
+                      <%= else %>
+                      <!-- <div class="mark-correct" id= <%= answer.user.uuid %>  > -->
+                        <%= link to: page_path(@conn, :mark_correct_answer, answer.uuid ), class: "btn btn-default btn-sm" ,id: "mark-correct" , method: :post, title: "Mark as correct answer" do %>
+                              <img  class="mark-correct" id= <%= answer.user.uuid %> src="https://img.icons8.com/color/20/000000/checkmark.png" />
+                        <%= end %>
+                      <!-- </div> -->
+                      <%= end %>
+                      <!-- Up Vote -->
+
+                      <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "up"), class: "btn btn-default btn-sm", method: :post do %>
+                            <img src="https://img.icons8.com/office/20/000000/up.png", title="Given Up Vote">
+                            <span><%=answer.up_votes%></span>
+                      <%= end %>
+
+                      <!-- down Vote -->
+                      <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "down" ), class: "btn btn-default btn-sm", method: :post do %>
+                            <img src="https://img.icons8.com/office/20/000000/down.png", title="Given Down Vote">
+                            <span><%=answer.down_votes%></span>
+
+                      <%= end %>
+
+
+
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </article>
+          <% end %>
+        </section>
+          <% end %>
+
+
+      
+    </div>
+  </div>
+  <div>
+    <div class="form-group">
+
+    <label class="col-md-4 control-label"> Add new answer: </label>
+  <div class="col-md-8">
+    <textarea class="form-control" name="answer" ></textarea>
+  </div>
+</div>
+    <input type="hidden"  name="question_uuid" value="<%= @question.uuid %>"></input>
+  </div>
+  <button class="btn btn-primary" type="submit"> <%= gettext("Submit Answer") %></button>
+  <% end %>
+</div>
+
+
+
+<!-- <div>
+  <%= form_for @conn, page_path(@conn, :add_answer), [id: :signupform], fn(f)-> %>
+  <div>
+  <%= label f, :question, "Question: " %>
+  <span> <%= @question.title %> </span>
+  <br>
+  <%= label f, :description, "Description: " %>
+  <span> <%= @question.description %> </span>
+  <p>by: <%= @question.first_name <> " " <> @question.last_name %></p>
+</div>
+<div>
+    <%= if @answers != [] do %>
+
+    <%= label f, :answers, "Answers" %>
+    <%= for answer <- @answers do %>
+        <div>
+          <%= answer.answer_text %>
+          <div>by: <%= answer.user.first_name %> <%= answer.user.last_name %> </div>
+        </div>
+      </br>
+    <% end %>
+    <% end %>
+</div>
+<div>
+  <label> Add new answer: </label>
+  <textarea name="answer" ></textarea>
+  <input type="hidden"  name="question_uuid" value="<%= @question.uuid %>"></input>
+</div>
+
+  <button type="submit"> <%= gettext("Submit Answer") %></input>
+  <% end %>
+  <br/>
+</div> -->

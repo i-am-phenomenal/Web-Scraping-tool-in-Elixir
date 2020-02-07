@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script> $( document ).ready(function() {
+   $("#question-added-msg").hide()
+   $("#marked-correct").hide()
+    }); </script>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/answer.css") %>">
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="header">
+        <nav role="navigation">
+          <ul class="nav nav-pills pull-right">
+            <%= if ( Map.get(@conn.assigns, :user) && Map.get(@conn.assigns, :user).uuid != nil) do %>
+            <li><a href="<%= page_path(@conn, :logout) %>">Sign Out</a></li>
+            <%= end %>
+          </ul>
+        </nav>
+
+      </header>
+      <span tooltip="New Questions have been added." id="question-added-msg">
+        <div class="alert">
+<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+<strong>Hey!</strong> There are new questions for you to answer.
+</div>
+      </span>
+
+      <span tooltip="New Questions have been added." id="marked-correct">
+        <div class="alert">
+<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+<img height=35px width=35px src="/images/crown.gif"></img>
+<strong>configuration!</strong> One of your answers has been marked correct.
+</div>
+      </span>
+      <input type="hidden" id="usser_uuid" name="usser_uuid" value=""></input>
+      <!-- <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p> -->
+
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+    </div> <!-- /container -->
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

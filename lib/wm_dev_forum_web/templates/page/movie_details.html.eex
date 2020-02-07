@@ -1,0 +1,10 @@
+<h1> <%= @basic_details.movie_name %> </h1>
+ <%= for directors_name <- @basic_details.director_name do %>
+    <%= directors_name %>
+ <%= end %>
+<br>
+<b>  Cast : </b> <%= for cast_name <-  @basic_details.cast do %>
+     <%= cast_name %> ,
+<%= end %>
+
+<br>
